@@ -32,36 +32,6 @@ A single agent must simultaneously retrieve facts, compute values, and write res
 - final responses lack structure
 
 ---
-
-## What This System Implements
-
-This project introduces a **Supervisor-based Multi-Agent Architecture**
-
-                    User Query (single or multi-task)
-                ↓
-      ┌──────────────────────┐
-      │  Supervisor LLM      │
-      │ - reads full query   │
-      │ - decomposes tasks   │
-      │ - routes agents      │
-      └──────────────────────┘
-        ↓         ↓          ↓
-   Research   Analysis   Summary
-    Agent       Agent      Agent
- (RAG + web)  (math tools) (LLM only)
-        ↓         ↓          ↓
-   ┌────────┐ ┌────────┐ ┌────────┐
-   │Tavily  │ │calc()  │ │writing │
-   │FAISS   │ │% change│ │format  │
-   └────────┘ └────────┘ └────────┘
-        ↓         ↓          ↓
-   factual     numeric     structured
-   output      output      response
-        ↓         ↓          ↓
-            Supervisor
-        (aggregation layer)
-                ↓
-        Final structured answer
                 
 
 ## Real-World Relevance
