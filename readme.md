@@ -37,24 +37,46 @@ A single agent must simultaneously retrieve facts, compute values, and write res
 
 This project introduces a **Supervisor-based Multi-Agent Architecture**:
 
-User Query (multi-step task)
-        ↓
-     Supervisor LLM
- (task decomposition + routing)
-        ↓
- ┌──────────┬───────────┬───────────┐
- │Research  │Analysis   │Summary    │
- │Agent     │Agent      │Agent      │
- │(RAG +    │(tools for │(LLM-based │
- │web search)│math)     │writing)   │
- └──────────┴───────────┴───────────┘
-        ↓
-   Supervisor aggregates outputs
-        ↓
-   Final structured response
-
-Each agent is intentionally constrained to a single responsibility. The supervisor ensures correct routing and coordination.
-
+                    ┌────────────────────────────┐
+                    │        User Query          │
+                    │ (single or multi-task)     │
+                    └─────────────┬──────────────┘
+                                  │
+                                  ▼
+                    ┌────────────────────────────┐
+                    │       Supervisor LLM       │
+                    │                            │
+                    │ - reads full query         │
+                    │ - decides routing          │
+                    │ - assigns ONE agent        │
+                    └─────────────┬──────────────┘
+                                  │
+        ┌─────────────────────────┼─────────────────────────┐
+        │                         │                         │
+        ▼                         ▼                         ▼
+┌──────────────────┐   ┌──────────────────┐   ┌──────────────────┐
+│ Research Agent   │   │ Analysis Agent   │   │ Summary Agent    │
+│                  │   │                  │   │                  │
+│ Tools:           │   │ Tools:           │   │ Tools:           │
+│ - Tavily Search  │   │ - calculate()    │   │ - None (LLM only)│
+│ - FAISS retriever│   │ - percentage     │   │                  │
+│                  │   │                  │   │                  │
+│ Output: facts    │   │ Output: numbers  │   │ Output: written  │
+└─────────┬────────┘   └─────────┬────────┘   └─────────┬────────┘
+          │                      │                       │
+          └──────────────┬───────┴───────────────┬──────┘
+                         ▼
+            ┌────────────────────────────┐
+            │   Supervisor (Final Step)   │
+            │                            │
+            │ - receives agent output     │
+            │ - logs message trace        │
+            │ - returns final answer      │
+            └─────────────┬──────────────┘
+                          ▼
+                ┌──────────────────┐
+                │   Final Output   │
+                └──────────────────┘
 ---
 
 ## Real-World Relevance
