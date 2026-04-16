@@ -37,46 +37,31 @@ A single agent must simultaneously retrieve facts, compute values, and write res
 
 This project introduces a **Supervisor-based Multi-Agent Architecture**:
 
-                    ┌────────────────────────────┐
-                    │        User Query          │
-                    │ (single or multi-task)     │
-                    └─────────────┬──────────────┘
-                                  │
-                                  ▼
-                    ┌────────────────────────────┐
-                    │       Supervisor LLM       │
-                    │                            │
-                    │ - reads full query         │
-                    │ - decides routing          │
-                    │ - assigns ONE agent        │
-                    └─────────────┬──────────────┘
-                                  │
-        ┌─────────────────────────┼─────────────────────────┐
-        │                         │                         │
-        ▼                         ▼                         ▼
-┌──────────────────┐   ┌──────────────────┐   ┌──────────────────┐
-│ Research Agent   │   │ Analysis Agent   │   │ Summary Agent    │
-│                  │   │                  │   │                  │
-│ Tools:           │   │ Tools:           │   │ Tools:           │
-│ - Tavily Search  │   │ - calculate()    │   │ - None (LLM only)│
-│ - FAISS retriever│   │ - percentage     │   │                  │
-│                  │   │                  │   │                  │
-│ Output: facts    │   │ Output: numbers  │   │ Output: written  │
-└─────────┬────────┘   └─────────┬────────┘   └─────────┬────────┘
-          │                      │                       │
-          └──────────────┬───────┴───────────────┬──────┘
-                         ▼
-            ┌────────────────────────────┐
-            │   Supervisor (Final Step)   │
-            │                            │
-            │ - receives agent output     │
-            │ - logs message trace        │
-            │ - returns final answer      │
-            └─────────────┬──────────────┘
-                          ▼
-                ┌──────────────────┐
-                │   Final Output   │
-                └──────────────────┘
+                    User Query (single or multi-task)
+                ↓
+      ┌──────────────────────┐
+      │  Supervisor LLM      │
+      │ - reads full query   │
+      │ - decomposes tasks   │
+      │ - routes agents      │
+      └──────────────────────┘
+        ↓         ↓          ↓
+   Research   Analysis   Summary
+    Agent       Agent      Agent
+ (RAG + web)  (math tools) (LLM only)
+        ↓         ↓          ↓
+   ┌────────┐ ┌────────┐ ┌────────┐
+   │Tavily  │ │calc()  │ │writing │
+   │FAISS   │ │% change│ │format  │
+   └────────┘ └────────┘ └────────┘
+        ↓         ↓          ↓
+   factual     numeric     structured
+   output      output      response
+        ↓         ↓          ↓
+            Supervisor
+        (aggregation layer)
+                ↓
+        Final structured answer
                 
 
 ## Real-World Relevance
