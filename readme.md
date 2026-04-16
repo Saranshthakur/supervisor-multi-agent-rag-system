@@ -37,28 +37,32 @@ A single agent must simultaneously retrieve facts, compute values, and write res
 
 This project introduces a **Supervisor-based Multi-Agent Architecture**:
 
-flowchart TD
+User Query (single or multi-task)
+                ↓
+      ┌──────────────────────┐
+      │  Supervisor LLM      │
+      │ - reads full query   │
+      │ - decomposes tasks   │
+      │ - routes agents      │
+      └──────────────────────┘
+        ↓         ↓          ↓
+   Research   Analysis   Summary
+    Agent       Agent      Agent
+ (RAG + web)  (math tools) (LLM only)
+        ↓         ↓          ↓
+   ┌────────┐ ┌────────┐ ┌────────┐
+   │Tavily  │ │calc()  │ │writing │
+   │FAISS   │ │% change│ │format  │
+   └────────┘ └────────┘ └────────┘
+        ↓         ↓          ↓
+   factual     numeric     structured
+   output      output      response
+        ↓         ↓          ↓
+            Supervisor
+        (aggregation layer)
+                ↓
+        Final structured answer
 
-A[User Query<br/>single or multi-task] --> B[Supervisor LLM<br/>task routing + decomposition]
-
-B -->|research task| C[Research Agent]
-B -->|math / calculation task| D[Analysis Agent]
-B -->|writing / formatting task| E[Summary Agent]
-
-C --> C1[Tools:<br/>Tavily Search<br/>Internal FAISS Retriever]
-C1 --> C2[Returns factual context]
-
-D --> D1[Tools:<br/>calculate()<br/>percentage_change()]
-D1 --> D2[Returns numeric results]
-
-E --> E1[LLM only]
-E1 --> E2[Returns structured summary]
-
-C2 --> F[Supervisor Aggregation]
-D2 --> F
-E2 --> F
-
-F --> G[Final Response to User]
 
 ---
 
