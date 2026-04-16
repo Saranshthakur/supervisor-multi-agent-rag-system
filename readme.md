@@ -1,4 +1,4 @@
-##  Problem This System Solves
+## 🚨 Problem This System Solves
 
 In real enterprise environments, users rarely ask single-purpose questions.
 
@@ -32,7 +32,30 @@ A single agent must simultaneously retrieve facts, compute values, and write res
 - final responses lack structure
 
 ---
-                
+
+## What This System Implements
+
+This project introduces a **Supervisor-based Multi-Agent Architecture**:
+
+User Query (multi-step task)
+        ↓
+     Supervisor LLM
+ (task decomposition + routing)
+        ↓
+ ┌──────────┬───────────┬───────────┐
+ │Research  │Analysis   │Summary    │
+ │Agent     │Agent      │Agent      │
+ │(RAG +    │(tools for │(LLM-based │
+ │web search)│math)     │writing)   │
+ └──────────┴───────────┴───────────┘
+        ↓
+   Supervisor aggregates outputs
+        ↓
+   Final structured response
+
+Each agent is intentionally constrained to a single responsibility. The supervisor ensures correct routing and coordination.
+
+---
 
 ## Real-World Relevance
 
