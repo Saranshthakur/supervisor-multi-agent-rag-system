@@ -35,7 +35,7 @@ A single agent must simultaneously retrieve facts, compute values, and write res
 
 ## What This System Implements
 
-This project introduces a **Supervisor-based Multi-Agent Architecture**:
+This project introduces a **Supervisor-based Multi-Agent Architecture**
 
                     User Query (single or multi-task)
                 ↓
