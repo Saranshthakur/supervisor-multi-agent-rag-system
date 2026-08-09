@@ -78,7 +78,7 @@ This project introduces a **Supervisor-based Multi-Agent Architecture**:
 
 ## Real-World Relevance
 
-This architecture directly maps to enterprise workflows:
+This architecture directly maps to the enterprise workflows:
 
 **Financial Services**
 - Policy lookup + exposure calculation + executive summary
