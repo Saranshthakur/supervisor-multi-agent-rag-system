@@ -19,8 +19,9 @@ This single request contains three different workloads:
 
 When handled by a single general-purpose LLM with multiple tools, two core issues appear:
 
+
 **1. Tool confusion**
-The model has access to retrieval, calculation, and writing capabilities, but no strict separation of responsibilities. This often leads to:
+The model has access to retrieval(RAG), calculation, and writing capabilities, but no strict separation of responsibilities. This often leads to:
 - incorrect tool selection  
 - reasoning done in the wrong component  
 - hallucinated or incomplete answers  
