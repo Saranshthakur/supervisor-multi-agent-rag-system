@@ -1,3 +1,4 @@
+
 ## 🚨 Problem This System Solves
 
 In real enterprise environments, users rarely ask single-purpose questions.
@@ -21,8 +22,8 @@ When handled by a single general-purpose LLM with multiple tools, two core issue
 
 
 **1. Tool confusion**
-The model has access to retrieval(RAG), calculation, and writing capabilities, but no strict separation of responsibilities. This often leads to:
-- incorrect tool selection  
+The model has access to retrieval, calculation, and writing capabilities, but no strict separation of responsibilities. This often leads to:
+- incorrect tool selections.  
 - reasoning done in the wrong component  
 - hallucinated or incomplete answers  
 
