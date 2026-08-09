@@ -10,7 +10,7 @@ For example:
 
 This single request contains three different workloads:
 - **Policy retrieval** → requires searching internal knowledge (RAG)
-- **Calculation** → requires deterministic arithmetic reasoning
+- **Calculation** → it requires deterministic arithmetic reasoning
 - **Summarisation** → requires structured natural language generation
 
 ---
