@@ -104,6 +104,5 @@ This makes the system:
 
 ---
 
-## One-Line Problem Statement
-
+## One-Line Problem Statement:
 Enterprise queries often require retrieval, reasoning, and generation simultaneously. Single-agent systems struggle with this complexity, so this project introduces a supervisor-driven multi-agent architecture that delegates tasks to specialized agents for improved accuracy, structure, and reliability.

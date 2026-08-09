@@ -30,7 +30,7 @@ os.environ["TAVILY_API_KEY"] = os.getenv("TAVILY_API_KEY")
 llm = init_chat_model("openai:gpt-4o-mini")
 
 
-# ── 4. TOOLS ──────────────────────────────────────────────
+Tool setup
 
 # Web Search Tool
 web_search = TavilySearchResults(max_results=5)
@@ -75,7 +75,7 @@ internal_knowledge = make_retrieval_tool(
 )
 
 
-# Calculation Tools
+# Calculation Tools (Manual tool created)
 @tool
 def calculate(expression: str) -> str:
     try:
